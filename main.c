@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <math.h>
 
-
+// TEST GIT
 
 
 struct wavfile //définit la structure de l entete d un wave
