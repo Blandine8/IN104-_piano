@@ -3,20 +3,25 @@
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_fft_real.h>
 #include <gsl/gsl_fft_halfcomplex.h>
+#include <gsl/gsl_fft_complex.h>
 #include <complex.h>
 #include <stdlib.h>
+#include "file.h"
+
+//typedef double complex cplx;
 
 int main(){
 
-	//le fichier doit contenir en première ligne le nombre de données qui suivent
-	/*-------------- selection du fichier audio(.txt)-------------------------------*/
+	/*
+    //le fichier doit contenir en première ligne le nombre de données qui suivent
+	-------------- selection du fichier audio(.txt)-------------------------------
 	printf ("entrer le nom du fichier audio a extraire en data :\n");
 	char fichieraudio[100];
     scanf("%s", fichieraudio);
     printf ("nom du fichier : %s\n", fichieraudio);
     //sprintf (fichierdat,"%s.dat", fichieraudio); //%s.dat 
 
-    /*--------------fin de selection du fichier audio-------------------------------*/
+    S--------------fin de selection du fichier audio-------------------------------
 
    	FILE *sgnl=fopen(fichieraudio, "rb");
    	if ( sgnl == NULL )
@@ -40,9 +45,15 @@ int main(){
    		tab[i]= d;
    		i=i+1;
    		//printf("%f %d\n", d, i);
-		}   	
+		}  
+        */
 
-	int a = gsl_fft_real_radix2_transform(tab,1,N);
+    double* tab=audiofileSelec(); //selection du fichier audio. 	
+    int N = sizeof(tab);
+
+	printf("%d\n", gsl_fft_real_radix2_transform(tab,1,N));
+
+    return (0);
 }
 
 
