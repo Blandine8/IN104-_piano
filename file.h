@@ -4,8 +4,10 @@
 #include <stdlib.h>
 #include <complex.h>
 
-typedef double complex cplx;
+#define REAL(z,i) ((z)[2*(i)])
+#define IMAG(z,i) ((z)[2*(i)+1])
+//typedef double complex cplx;
 
-cplx* audiofileSelec();
+double* audiofileSelec();
 
 #endif
