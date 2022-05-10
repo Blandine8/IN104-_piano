@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <complex.h>
 
-typedef double complex cplx;
+#define REAL(z,i) ((z)[2*(i)])
+#define IMAG(z,i) ((z)[2*(i)+1])
+//typedef double complex cplx;
 
-cplx* audiofileSelec(){
+double* audiofileSelec(){
 
 
 //le fichier doit contenir en première ligne le nombre de données qui suivent
@@ -30,13 +32,20 @@ cplx* audiofileSelec(){
     fscanf(sgnl, "%d", &N);
     printf("N1=%d\n", N);
 
-    N=500;
+    //N=500;
 
-    cplx* tab;
-    printf("taille de tab = %ld", sizeof(tab));
-    tab = malloc(sizeof(double)*N);
+    //cplx* tab;
+    double* data;
+    //printf("taille de tab = %ld", sizeof(tab));
+    //tab = malloc(sizeof(double)*N);
+    data = malloc(sizeof(double)*2*N);
 
-    if (tab==NULL){
+    /*if (tab==NULL){
+      printf("error.malloc");
+      exit(1);
+    }*/
+
+    if (data==NULL){
       printf("error.malloc");
       exit(1);
     }
@@ -49,12 +58,14 @@ cplx* audiofileSelec(){
       //printf("%d\n",i);
       fscanf(sgnl,"%lf", &d);
 
-      cplx z= CMPLX (d,0);
+      //cplx z= CMPLX (d,0);
       //printf("d= %lf\n",d);
-      tab[i]= z;
+      //tab[i]= z;
+      REAL(data,i)=d;
+      IMAG(data,i)=0;
       i=i+1;
-      printf("tab(%d)=%.1f + %1.fi\n", i, creal(tab[i]), cimag(tab[i]));
+      //printf("tab(%d)=%.1f + %1.fi\n", i, creal(tab[i]), cimag(tab[i]));
     }
 
-    return (tab);
+    return data;
 }
