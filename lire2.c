@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
     // get filename from command line
     if (argc < 2) {
       printf("No wave file specifiedn");
-      return;
+      return 1;
     }
     
     strcat(filename, "/");
