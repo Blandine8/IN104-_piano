@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
 
 
     /*---------------------initialisation des tableaux dynamiques--------------------*/
-    for(i=0; i<nbech; i++) // on met autant de zéros que de donnés 
+    for(i=0; i<nbech; i++) // on met autant de zéros que de données 
     {
         data[i]=0;
     }
