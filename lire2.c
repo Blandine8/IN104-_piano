@@ -181,7 +181,7 @@ int main(int argc, char **argv) {
         // make sure that the bytes-per-sample is completely divisible by num.of channels
         long bytes_in_each_channel = (size_of_each_sample / header.channels);
         if ((bytes_in_each_channel  * header.channels) != size_of_each_sample) {
-            printf("Error: %ld x %ud <> %ldn", bytes_in_each_channel, header.channels, size_of_each_sample);
+            printf("Error: %ld x %ud <> %ld\n", bytes_in_each_channel, header.channels, size_of_each_sample);
             size_is_correct = FALSE;
         }
  
@@ -243,7 +243,7 @@ int main(int argc, char **argv) {
                         printf(" | ");
                     }
 
-                    printf("n");
+                    printf("\n");
                 }
                 else {
                     printf("Error reading file. %d bytes\n", read);
@@ -253,12 +253,13 @@ int main(int argc, char **argv) {
             } // 	for (i =1; i <= num_samples; i++) {
 
         } // 	if (size_is_correct) { 
-
+printf("oooooooooooooooooooo\n%d", data_buffer[100]);
      } // if (c == 'Y' || c == 'y') { 
  } //  if (header.format_type == 1) { 
 
  printf("Closing file..\n");
  fclose(ptr);
+
 
 
   // cleanup before quitting
