@@ -6,6 +6,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int init(SDL_Window **window, SDL_Renderer **renderer, int w, int h)
+{
+    if(0 != SDL_Init(SDL_INIT_VIDEO))
+    {
+        fprintf(stderr, "Erreur SDL_Init : %s", SDL_GetError());
+        return -1;
+    }
+    if(0 != SDL_CreateWindowAndRenderer(w, h, SDL_WINDOW_SHOWN, window, renderer))
+    {
+        fprintf(stderr, "Erreur SDL_CreateWindowAndRenderer : %s", SDL_GetError());
+        return -1;
+    }
+    return 0;
+}
 
 
 
@@ -18,7 +32,8 @@ int main(int argc,char *argv[]){
 
 
 	//initialisation de la SDL
-	if(0!= SDL_Init(SDL_INIT_VIDEO)){
+	init(window, renderer,600,200);
+	/*if(0!= SDL_Init(SDL_INIT_VIDEO)){
 		fprintf(stderr, "Erreur de SDL_Init: %s\n",SDL_GetError()); //écrit dans le flux de sortie standard d'erreur un message à propos de la dernière erreur rencontrée.
 		goto Quit;
 	}
@@ -29,18 +44,18 @@ int main(int argc,char *argv[]){
 	if (NULL==window){
 		fprintf(stderr, "Erreur SDL_CreateWindow : %s\n", SDL_GetError());
 		goto Quit;
-	}
+	}*/
 
 	/*on agit sur la fenêtre ici*/
 
 	
-	renderer=SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	/*renderer=SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
 	if(NULL==renderer){
 		
 		fprintf(stderr, "Erreur SDL_CreateRenderer : %s\n", SDL_GetError());
 		goto Quit;
-	}
+	}*/
 
 	/* C’est à partir de maintenant que ça se passe. */
 
