@@ -3,6 +3,7 @@
 #include <math.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_fft_complex.h>
+#include <gsl/gsl_sf_trig.h>
 
 #define REAL(z,i) ((z)[2*(i)])
 #define IMAG(z,i) ((z)[2*(i)+1])
@@ -27,7 +28,14 @@ int main(int argc, char* argv[]){
     // close the file
     fclose(file);
 
-    printf("%f\n",raw_data[n]);
+
+    // fenêtre de Hamming
+    double hamming [n] ;
+    for (i=0; i<n ; ++i) {
+      // hamming[i] = (0.5 - 0.5*gsl_sf_cos(2*M_PI*(i/n)))*raw_data[i] ;
+    }
+
+    //printf("%f\n",raw_data[n]);
 
 
     double data[2*n];
@@ -36,13 +44,13 @@ int main(int argc, char* argv[]){
     gsl_fft_complex_workspace * workspace;
     for (i = 0; i < n; i++){
         REAL(data,i) = raw_data[i];
+        //REAL(data,i) = hamming[i];
         IMAG(data,i) = 0.0;
     }
 
     for (i = 0; i < n; i++)
     {
-      printf ("%d: %e %e\n", i, REAL(data,i),
-                                IMAG(data,i));
+      //printf ("%d: %e %e\n", i, REAL(data,i),IMAG(data,i));
     }
     printf ("\n");
 
@@ -50,15 +58,36 @@ int main(int argc, char* argv[]){
     workspace = gsl_fft_complex_workspace_alloc (n);
 
     for (i = 0; i < (int) wavetable->nf; i++){
-       printf ("# factor %d: %zu\n", i, wavetable->factor[i]);
+       //printf ("# factor %d: %zu\n", i, wavetable->factor[i]);
     }
 
     gsl_fft_complex_forward (data, 1, n, wavetable, workspace);
 
-    for (i = 0; i < n; i++){
-        printf ("%d: %e %e\n", i, REAL(data,i),
-                                IMAG(data,i));
+    double module[n];
+    double max =1 ;
+    int ind ;
+    int f=5000;
+
+    for (i = 0; i < n; i++ ){
+        printf ("%d: %e %e\n", i, REAL(data,i),IMAG(data,i));
+        
+        module[i]= sqrt(REAL(data,i)*REAL(data,i) + IMAG(data,i)*IMAG(data,i));
     }
+
+
+    for (i = 0; i < 5; i++){
+        for (j=i, j< 10, j++){
+        max=max*module[j]
+    }
+        if (module[i]> max){
+            max = (module[i]);
+            ind = i;
+        }
+    }
+
+    
+
+    printf ("%f\n %i\n",max,ind);
 
     gsl_fft_complex_wavetable_free (wavetable);
     gsl_fft_complex_workspace_free (workspace);
