@@ -75,7 +75,26 @@ int main(int argc,char *argv[]){
     	fprintf(stderr, "Erreur SDL_RenderCopy : %s", SDL_GetError());
         goto Quit;
     }
+
+    if(0 != SDL_SetRenderDrawColor(renderer, orange.r, orange.g, orange.b, orange.a))
+    {
+        fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
+        goto Quit;
+    }
+
+    int tnoire_w=40;
+    int tnoire_h=199;
+
+    SDL_Rect rectangle2;
+    rectangle2.x=rectangle.x;
+    rectangle2.y=rectangle.y;
+    rectangle2.w= rectangle.w/7-tnoire_w/2;
+    rectangle2.h=tnoire_h;
 	
+	if(0 != SDL_RenderFillRect(renderer, &rectangle2)){
+    	fprintf(stderr, "Erreur SDL_RenderDrawLine : %s", SDL_GetError());
+        goto Quit;
+    }
     
 
 
@@ -91,7 +110,7 @@ int main(int argc,char *argv[]){
 	//SDL_Delay(2000); //la fenêtre s'affiche pendant 2s
 	
 	SDL_RenderPresent(renderer);
-	SDL_Delay(3000); //et se colore en orange pendant 3s
+	SDL_Delay(10000); //et se colore en orange pendant 3s
 
 	statut=EXIT_SUCCESS;
 
