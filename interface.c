@@ -24,9 +24,92 @@ int init(SDL_Window **window, SDL_Renderer **renderer, int w, int h)
     return 0;
 }
 
+int colorNote(SDL_Renderer *renderer, SDL_Rect rectangle, SDL_Color orange, int note){
+
+	if(0 != SDL_SetRenderDrawColor(renderer, orange.r, orange.g, orange.b, orange.a))
+    {
+        fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
+        return -1;
+    }
+    int posx= rectangle.x+7 +(note-1)* (rectangle.w-7)/7;
+    int posy=rectangle.y;
+    int tnoire_w=39;
+    int tnoire_h=198;
+
+    SDL_Rect tHaut;
+    SDL_Rect tBas;
+    SDL_Rect tNoire;
+
+    tBas.w= rectangle.w/7-7;
+    tBas.h=rectangle.h-tnoire_h;
+    tBas.x=posx;
+    tBas.y=rectangle.y+tnoire_h;
+
+    tNoire.w=tnoire_w;
+    tNoire.h=tnoire_h;
+    tNoire.y=rectangle.y;
+    
+
+    if ((note==1)|(note==4)){
+    	tHaut.x=posx;
+    	tHaut.y=rectangle.y;
+    	tHaut.w= rectangle.w/7-tnoire_w/2-2;
+    	tHaut.h=tnoire_h;	
+    }
+
+    else{
+    	if ((note ==2) | (note==5) | (note==6)){
+    		tHaut.x=posx+tnoire_w/2-7;
+    		tHaut.y=rectangle.y;
+    		tHaut.w= (rectangle.w-7)/7-tnoire_w+7;
+    		tHaut.h=tnoire_h;
+
+    	}
+
+    	else{
+    		if ((note==3) | (note==7)){
+    			tHaut.x=posx+tnoire_w/2-5;
+	    		tHaut.y=rectangle.y;
+	    		tHaut.w= rectangle.w/7-tnoire_w/2-2;
+	    		tHaut.h=tnoire_h;
+
+    		}
+
+    		else {
+    			tNoire.x= rectangle.x + (note-11)*(rectangle.w/7)+ rectangle.w/7-tnoire_w/2+2;		
+
+    		}
+    
+    	}
+    		}
+    
+    
+	
+	if(0 != SDL_RenderFillRect(renderer, &tHaut)){
+    	fprintf(stderr, "Erreur SDL_RenderDrawLine : %s", SDL_GetError());
+        return -1;
+    }
+
+    
+    
+    
+    
+    if(0 != SDL_RenderFillRect(renderer, &tBas)){
+    	fprintf(stderr, "Erreur SDL_RenderDrawLine : %s", SDL_GetError());
+        return -1;
+    }
+
+    if(0 != SDL_RenderFillRect(renderer, &tNoire)){
+    	fprintf(stderr, "Erreur SDL_RenderDrawLine : %s", SDL_GetError());
+        return -1;
+    }
+
+    return 0;
+}
 
 
-int main(int argc,char *argv[]){
+void pianoColor(int* note){
+
 
 	SDL_Window *window=NULL;
 	SDL_Renderer* renderer=NULL;
@@ -76,25 +159,20 @@ int main(int argc,char *argv[]){
         goto Quit;
     }
 
-    if(0 != SDL_SetRenderDrawColor(renderer, orange.r, orange.g, orange.b, orange.a))
-    {
-        fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
-        goto Quit;
-    }
+    for (int i=0; i<3; i++){
 
-    int tnoire_w=40;
-    int tnoire_h=199;
+    	if (note[i] !=0 ){
 
-    SDL_Rect rectangle2;
-    rectangle2.x=rectangle.x;
-    rectangle2.y=rectangle.y;
-    rectangle2.w= rectangle.w/7-tnoire_w/2;
-    rectangle2.h=tnoire_h;
-	
-	if(0 != SDL_RenderFillRect(renderer, &rectangle2)){
-    	fprintf(stderr, "Erreur SDL_RenderDrawLine : %s", SDL_GetError());
-        goto Quit;
+    	
+    		if (0!= colorNote(renderer, rectangle, orange,note[i])){
+    			goto Quit;
+    		}
+    	}
+    	
     }
+    
+
+    
     
 
 
@@ -126,42 +204,6 @@ Quit:
 		SDL_DestroyWindow(window);
 	}
 	SDL_Quit(); //pour quitter la SDL
-	return statut;
+	//return statut;
 }
 
-
-
-/*//colorie la fenêtre en orange
-    if(0 != SDL_SetRenderDrawColor(renderer, orange.r, orange.g, orange.b, orange.a))
-    {
-        fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
-        goto Quit;
-    }
-
-    if(0 != SDL_RenderDrawPoint(renderer, 50, 50)){
-    	fprintf(stderr, "Erreur SDL_RenderDrawPoint : %s", SDL_GetError());
-        goto Quit;
-    }
-
-    if(0 != SDL_RenderDrawLine(renderer, 50, 50,100,100)){
-    	fprintf(stderr, "Erreur SDL_RenderDrawLine : %s", SDL_GetError());
-        goto Quit;
-    }
-
-
-    SDL_Rect rectangle;
-    rectangle.x=100;
-    rectangle.y=100;
-    rectangle.w=100;
-    rectangle.h=100;
-
-    if(0 != SDL_SetRenderDrawColor(renderer, white.r, white.g, white.b,white.a))
-    {
-        fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
-        goto Quit;
-    }
-
-    if(0 != SDL_RenderFillRect(renderer, &rectangle)){
-    	fprintf(stderr, "Erreur SDL_RenderDrawLine : %s", SDL_GetError());
-        goto Quit;
-    }*/
