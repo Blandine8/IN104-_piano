@@ -4,15 +4,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "interface.h"
+#include "fftgsl.h"
 
-int main(){
 
+
+int main(int argc, char* argv[]){
+    char *nom=argv[1];
 	int note[3];
-	note[0]=12;
-	note[1]=11;
-	note[2]=15;
-
+	note[0]=numero_note(nom);
+	note[1]=0;
+	note[2]=0;
+	 ;
 	pianoColor(note);
 	
 	return 0;
 }
+
+
+
+    
