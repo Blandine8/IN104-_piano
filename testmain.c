@@ -12,8 +12,8 @@ int main(int argc, char* argv[]){
     char *nom=argv[1];
 	int note[3];
 	note[0]=numero_note(nom);
-	note[1]=0;
-	note[2]=0;
+	note[1]=14;
+	note[2]=16;
 	 ;
 	pianoColor(note);
 	
