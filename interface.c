@@ -31,16 +31,16 @@ int colorNote(SDL_Renderer *renderer, SDL_Rect rectangle, SDL_Color orange, int 
         fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
         return -1;
     }
-    int posx= rectangle.x+7 +(note-1)* (rectangle.w-7)/7;
+    int posx= rectangle.x +(note-1)* (rectangle.w+6)/7;
     int posy=rectangle.y;
-    int tnoire_w=39;
-    int tnoire_h=198;
+    int tnoire_w=41;
+    int tnoire_h=194;
 
     SDL_Rect tHaut;
     SDL_Rect tBas;
     SDL_Rect tNoire;
 
-    tBas.w= rectangle.w/7-7;
+    tBas.w= rectangle.w/7-5;
     tBas.h=rectangle.h-tnoire_h;
     tBas.x=posx;
     tBas.y=rectangle.y+tnoire_h;
@@ -68,15 +68,15 @@ int colorNote(SDL_Renderer *renderer, SDL_Rect rectangle, SDL_Color orange, int 
 
     	else{
     		if ((note==3) | (note==7)){
-    			tHaut.x=posx+tnoire_w/2-5;
+    			tHaut.x=posx+tnoire_w/2-4;
 	    		tHaut.y=rectangle.y;
-	    		tHaut.w= rectangle.w/7-tnoire_w/2-2;
+	    		tHaut.w= rectangle.w/7-tnoire_w/2-1;
 	    		tHaut.h=tnoire_h;
 
     		}
 
     		else {
-    			tNoire.x= rectangle.x + (note-11)*(rectangle.w/7)+ rectangle.w/7-tnoire_w/2+2;		
+    			tNoire.x= rectangle.x + (note-11)*(rectangle.w/7)+ rectangle.w/7-tnoire_w/2;		
 
     		}
     
